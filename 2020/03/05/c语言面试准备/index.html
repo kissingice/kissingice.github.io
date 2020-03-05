@@ -15,14 +15,14 @@
 
 
 
-<meta name="description" content="#define不能以分号结束，在宏中把参数用括号括起来">
+<meta name="description" content="#define不能以分号结束，在宏中把参数用括号括起来 预处理器直接计算常数表达式的值 死循环：while(1){}或for(;;){} 两者相比for里面为空，编译执行之后没有判断的语句，而 while(1)始终都会有执行判断 1 &#x3D; true，所以在单片机这种低速的、内存资源不多的环境，for(;;)是更好的选择。少执行判断语句，直接跳转（jump）到循环开始的代码继续执行。 用变量a给出下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c语言面试准备">
 <meta property="og:url" content="http://yoursite.com/2020/03/05/c%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/index.html">
 <meta property="og:site_name" content="KissingIce">
-<meta property="og:description" content="#define不能以分号结束，在宏中把参数用括号括起来">
+<meta property="og:description" content="#define不能以分号结束，在宏中把参数用括号括起来 预处理器直接计算常数表达式的值 死循环：while(1){}或for(;;){} 两者相比for里面为空，编译执行之后没有判断的语句，而 while(1)始终都会有执行判断 1 &#x3D; true，所以在单片机这种低速的、内存资源不多的环境，for(;;)是更好的选择。少执行判断语句，直接跳转（jump）到循环开始的代码继续执行。 用变量a给出下">
 <meta property="article:published_time" content="2020-03-05T15:10:14.035Z">
-<meta property="article:modified_time" content="2020-03-05T15:20:50.483Z">
+<meta property="article:modified_time" content="2020-03-05T15:44:09.276Z">
 <meta property="article:author" content="KissingIce">
 <meta name="twitter:card" content="summary">
 
@@ -297,7 +297,10 @@
       
           
         <ol>
-<li>#define不能以分号结束，在宏中把参数用括号括起来</li>
+<li><strong>#define</strong>不能以分号结束，在宏中把参数用括号括起来</li>
+<li>预处理器直接计算常数表达式的值</li>
+<li>死循环：while(1){}或for(;;){}<br> 两者相比for里面为空，编译执行之后没有判断的语句，而 while(1)始终都会有执行判断 1 = true，所以在单片机这种低速的、内存资源不多的环境，for(;;)是更好的选择。少执行判断语句，直接跳转（jump）到循环开始的代码继续执行。</li>
+<li>用变量a给出下面的定义<br> a)一个整型数: int a<br> b)一个指向整型数的指针: int <em>a<br> c)一个指向指针的指针，它指向的指针是指向一个整型数: int *</em>a<br> d) 一个有10个整型数的数组:int a[10]</li>
 </ol>
 
       
@@ -310,7 +313,7 @@
         <p><span>本文标题:</span><a href="/2020/03/05/c%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/">c语言面试准备</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">KissingIce</a></p>
         <p><span>发布时间:</span>2020-03-05, 23:10:14</p>
-        <p><span>最后更新:</span>2020-03-05, 23:20:50</p>
+        <p><span>最后更新:</span>2020-03-05, 23:44:09</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2020/03/05/c%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/" title="c语言面试准备">http://yoursite.com/2020/03/05/c%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2020/03/05/c%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/　　作者: KissingIce" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
