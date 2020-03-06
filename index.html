@@ -160,6 +160,8 @@
                     <nav class="header-menu">
                         <ul>
                         
+                            <li><a href="/">主页</a></li>
+                        
                             <li><a href="/archives/">所有文章</a></li>
                         
                             <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
@@ -186,7 +188,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%82%E8%80%83c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%81%9A%E7%9A%84%E7%AC%94%E8%AE%B0/" rel="tag">参考c语言笔试做的笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%82%E8%80%83%E7%BD%91%E4%B8%8Ac%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%81%9A%E7%9A%84%E7%AC%94%E8%AE%B0/" rel="tag">参考网上c语言面试做的笔记</a></li></ul>
                     </div>
                 </section>
                 
@@ -235,6 +237,8 @@
             <nav class="header-menu">
                 <ul>
                 
+                    <li><a href="/">主页</a></li>
+                
                     <li><a href="/archives/">所有文章</a></li>
                 
                     <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
@@ -263,11 +267,78 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-c语言笔试准备" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/" class="article-date">
+      <time datetime="2020-03-06T12:23:02.000Z" itemprop="datePublished">2020-03-06</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/">c语言笔试准备</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <ol>
+<li><p>若以下说明语句:char x; float y; double z; 则表达式x-y+z的类型为（double） 。<br>字节转换从低到高 char–&gt;float–&gt;short–&gt;int–&gt;double<br>规律：占用字节数小的类型在与占用字节数大的类型运算时会被转化为占用<strong>字节数大</strong>的类型。</p>
+</li>
+<li><p>设int a=3,b=5,m，执行表达式m=a&lt;=3&amp;&amp;a+b&lt;8后，m的值为 （0）<br><strong>！ &gt; 算术运算符 &gt; 关系运算符 &gt; &amp;&amp; &gt; || &gt; 赋值运算符</strong><br>m是整型，因此将false转为整型即为0。<br>m=1&amp;&amp;0<br>m=0</p>
+</li>
+<li><p>用数组名作函数实参时，形参可以用同类型的指针变量。<br>比如数组<br>int S[10];<br>数组名S可以理解为就是指向数组首地址的指针，即 S 和 &amp;S[0] 等价，*S和S[0]等价， 数组名作函数实参时，参数类型就是指向整型的指针</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%82%E8%80%83c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%81%9A%E7%9A%84%E7%AC%94%E8%AE%B0/" rel="tag">参考c语言笔试做的笔记</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-c语言面试准备" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2020/03/05/c%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/" class="article-date">
-      <time datetime="2020-03-05T15:10:14.035Z" itemprop="datePublished">2020-03-05</time>
+      <time datetime="2020-03-04T16:00:00.000Z" itemprop="datePublished">2020-03-05</time>
 </a>
 
 
@@ -294,6 +365,12 @@
           
         <ol>
 <li><p><strong>#define</strong>不能以分号结束，在宏中把参数用括号括起来</p>
+<ul>
+<li>写一个“标准”宏,这个宏输入两个参数并返回较小的：<code>#define MIN(x, y) ((x)&lt; (y)?(x):(y)) //结尾没有;</code></li>
+<li>#是把宏参数转化为字符串的运算符，##是把两个宏参数连接的运算符。</li>
+<li>为避免头文件my_ head.h被重复包含，可在其中使用条件编译:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#ifndef_ MY_ HEAD H</span><br><span class="line">#define_ MY_ HEAD_ H &#x2F;*空宏*&#x2F;</span><br><span class="line">&#x2F;*其他语句*&#x2F;</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 </li>
 <li><p>预处理器直接计算常数表达式的值</p>
 </li>
@@ -330,10 +407,12 @@
 <li>可以保护被修饰的东西，防止意外的修改，增强程序的健壮性,减少bug。</li>
 <li>可以节省空间，避免不必要的内存分配。</li>
 <li>意味着<strong>只读</strong>。<ul>
-<li>const int a； 或int const a； 表示a是一个常整型数。</li>
-<li>const int <em>a; 意味着a是一个指向常整型数的指针（*</em>整型数是不可修改的，但指针可以**</u>）。</li>
-<li>int * const a; a是一个指向整型数的常指针（<strong>指针指向的整型数是可以修改的，但指针是不可修改的</strong>）。</li>
-<li>int const * a const; 意味着a是一个指向常整型数的常指针（也就是说，<strong>指针指向的整型数是不可修改的，同时指针也是不可修改的</strong>）.</li>
+<li><code>const int a</code>； 或<code>int const a</code>； 表示a是一个常整型数。</li>
+<li><code>const int *a</code>; 意味着a是一个指向常整型数的指针（<strong>整型数是不可修改的，但指针可以</strong></u>）。</li>
+<li><code>int * const a</code>; a是一个指向整型数的常指针（<strong>指针指向的整型数是可以修改的，但指针是不可修改的</strong>）。</li>
+<li><code>int const * a const</code>; 意味着a是一个指向常整型数的常指针（也就是说，<strong>指针指向的整型数是不可修改的，同时指针也是不可修改的</strong>）。</li>
+<li><code>int fun(const int a);</code>或<code>int fun(const char *str);</code>修饰函数形参,使得形参在函数内不能被修改，表示输入参数。</li>
+<li><code>const char *getstr(void);</code>使用: <code>const *str= getstr);</code><br><code>const int getint(void);</code>使用: <code>const int a =getint();</code>修饰函数返回值，使得函数的返回值不能被修改。</li>
 </ul>
 </li>
 </ul>
@@ -347,6 +426,35 @@
 </ul>
 </li>
 <li>搞嵌入式的家伙们经常同硬件、中断、RTOS等等打交道，所有这些都要求用到volatile变量。</li>
+<li>问题<ol>
+<li>一个参数既可以是const还可以是volatile吗？解释为什么。<ul>
+<li>一个例子是只读的状态寄存器。它是volatile因为它可能被意想不到地改变。它是const因为程序不应该试图去修改它。 </li>
+</ul>
+</li>
+<li>一个指针可以是volatile 吗？解释为什么。 <ul>
+<li>一个例子是当一个中服务子程序修该一个指向一个buffer的指针时。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>volatile指定的关键字可能被系统、硬件、进程/线程改变,强制编译器每次从内存中取得该变量的值，而不是从被优化后的寄存器中读取。例子:硬件时钟;多线程中被多个任务共享的变量等。</li>
+</ul>
+</li>
+<li><p>extern关键宇的作用：</p>
+<ul>
+<li>于修饰变量或函数，表明该变量或函数都是在别的文件中定义的,提示编译器在其他文件找定义。</li>
+<li><code>extern &quot;C&quot;</code>的作用就是为了能够正确实现C+ +代码调其他C语言代码。</li>
+</ul>
+</li>
+<li><p>要求设置一绝对地址为0x67a9的整型变量的值为0xaa66。编译器是一个纯粹的ANSI编译器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int *ptr; </span><br><span class="line">ptr &#x3D; (int *)0x67a9; </span><br><span class="line">*ptr &#x3D; 0xaa55;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>有关中断：</p>
+<ul>
+<li>ISR 不能返回一个值。如果你不懂这个，那么你不会被雇用。 </li>
+<li>ISR 不能传递参数。如果你没有看到这一点，你被雇用的机会等同第一项。 </li>
+<li>在许多的处理器/编译器中，浮点一般都是不可重入的。有些处理器/编译器需要让额处的寄存器入栈，有些处理器/编译器就是不允许在ISR中做浮点运算。此外，ISR应该是短而有效率的，在ISR中做浮点运算是不明智的。 </li>
+<li>与第三点一脉相承，printf()经常有重入和性能上的问题。</li>
 </ul>
 </li>
 </ol>
@@ -359,6 +467,10 @@
       
 
       
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%82%E8%80%83%E7%BD%91%E4%B8%8Ac%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%81%9A%E7%9A%84%E7%AC%94%E8%AE%B0/" rel="tag">参考网上c语言面试做的笔记</a></li></ul>
+    </div>
+
       
       <div class="clearfix"></div>
     </div>
