@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="KissingIce">
 <meta property="og:description" content="下载数据  打开vscode，建立新的python文件，输入以下代码，下载housing.tgz文件，并将housing.csv解压到这个目录123456789101112131415161718import osimport tarfilefrom six.moves import urllibdownload_root &#x3D; &quot;https:&#x2F;&#x2F;raw.g">
 <meta property="article:published_time" content="2020-03-10T17:14:42.000Z">
-<meta property="article:modified_time" content="2020-03-10T18:15:56.917Z">
+<meta property="article:modified_time" content="2020-03-11T17:24:11.358Z">
 <meta property="article:author" content="KissingIce">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
@@ -300,33 +300,47 @@
 下载后可将函数注释</li>
 </ul>
 </li>
-<li><p>快速查看数据结构</p>
+<li><p>快速查看数据结构<br>a) 使用pandas加载数据</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mport pandas as pd</span><br><span class="line">def load_housing_data(housing_path&#x3D;HOUSING_PATH):</span><br><span class="line">  csv_path &#x3D; os.path.join(housing_path, &quot;housing.csv&quot;)</span><br><span class="line">  return pd.read_csv(csv_path)</span><br></pre></td></tr></table></figure>
+<p> 函数返回一个包含所有数据的Pandas DataFrame对象</p>
+<p>b) 调用DataFrames的head()方法查看前5行数据（由于使用的是vscode所以会和书里有所不同）,查看完可注释</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">housing &#x3D; load_housing_data()</span><br><span class="line">print(housing.head())</span><br></pre></td></tr></table></figure>
+<p> 总共有10个属性</p>
+<p>c) 通过info（）方法可以快速获取数据集的简单描述，特别是总行数、每个属性的类型和非空值的数量<br> <code>print(housing.info())</code></p>
+<p>d) 使用value_counts（）方法查看有多少种分类存在，每种类别下分别有多少个区域<br> <code>print(housing[&quot;ocean_proximity&quot;].value_counts())</code></p>
+<p>e) 通过describe（）方法可以显示数值属性的摘要<br> <code>print(housing.describe())</code></p>
+<p>f) 在整个数据集上调用hist（）方法，绘制每个属性的直方图</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">housing.hist(bins&#x3D;50, figsize&#x3D;(50,15))</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建测试集</p>
 <ul>
-<li><p>使用pandas加载数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line">def load_housing_data(housing_path&#x3D;HOUSING_PATH):</span><br><span class="line">    csv_path &#x3D; os.path.join(housing_path, &quot;housing.csv&quot;)</span><br><span class="line">    return pd.read_csv(csv_path)</span><br></pre></td></tr></table></figure>
-<p>函数返回一个包含所有数据的Pandas DataFrame对象</p>
-</li>
-<li><p>调用DataFrames的head()方法查看前5行数据（由于使用的是vscode所以会和书里有所不同）,查看完可注释</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">housing &#x3D; load_housing_data()</span><br><span class="line">print(housing.head())</span><br></pre></td></tr></table></figure>
-<p>总共有10个属性</p>
-</li>
-<li><p>通过info（）方法可以快速获取数据集的简单描述，特别是总行数、每个属性的类型和非空值的数量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> + 使用value_counts（）方法查看有多少种分类存在，每种类别下分别有多少个区域</span><br><span class="line">&#96;&#96;&#96;print(housing[&quot;ocean_proximity&quot;].value_counts())</span><br></pre></td></tr></table></figure></li>
-<li><p>通过describe（）方法可以显示数值属性的摘要</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ 在整个数据集上调用hist（）方法，绘制每个属性的直方图</span><br></pre></td></tr></table></figure>
-<p>import matplotlib.pyplot as plt</p>
+<li>理论上，创建测试集非常简单：只需要随机选择一些实例，通常是数据集的20%，然后将它们放在一边：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">def split_train_test(data, test_ratio):</span><br><span class="line">    shuffled_indices &#x3D; np.random.permutation(len(data))</span><br><span class="line">    test_set_size &#x3D; int(len(data) * test_ratio)</span><br><span class="line">    test_indices &#x3D; shuffled_indices[:test_set_size]</span><br><span class="line">    train_indices &#x3D; shuffled_indices[test_set_size:]</span><br><span class="line">    return data.iloc[train_indices], data.iloc[test_indices]</span><br><span class="line"></span><br><span class="line">train_set, test_set &#x3D; split_train_test(housing, 0.2)</span><br><span class="line">print(len(train_set), &quot;train +&quot;, len(test_set), &quot;test&quot;)</span><br></pre></td></tr></table></figure></li>
+<li>但这并不完美：如果你再运行一遍，它又会产生一个不同的数据集！这样下去，你（或者是你的机器学习算法）将会看到整个完整的数据集，而这正是创建测试集时需要避免的。常见的解决办法是每个实例都使用一个标识符（identifier）来决定是否进入测试集（假定每个实例都有一个唯一且不变的标识符）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line">def test_set_check(identifier,test_ratio, hash):</span><br><span class="line">    return hash(np.int64(identifier)).digest()[-1] &lt; 256 * test_ratio</span><br><span class="line"></span><br><span class="line">def split_train_test_by_id(data, test_ratio, id_column, hash&#x3D;hashlib.md5):</span><br><span class="line">    ids &#x3D; data[id_column]</span><br><span class="line">    in_test_set &#x3D; ids.apply(lambda id_: test_set_check(id_, test_ratio, hash))</span><br><span class="line">    return data.loc[~in_test_set], data.loc[in_test_set]</span><br><span class="line"></span><br><span class="line">#housing_with_id &#x3D; housing.reset_index()</span><br><span class="line">#housing_with_id[&quot;id&quot;] &#x3D; housing[&quot;longitude&quot;] * 1000 + housing[&quot;latitude&quot;]</span><br><span class="line">#train_set, test_set &#x3D; split_train_test_by_id(housing_with_id, 0.2, &quot;id&quot;)</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">train_set, test_set &#x3D; train_test_split(housing, test_size&#x3D;0.2, random&#x3D;42)</span><br></pre></td></tr></table></figure></li>
+<li>分层抽样<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">housing[&quot;income_cat&quot;] &#x3D; np.ceil(housing[&quot;median_income&quot;] &#x2F; 1.5)</span><br><span class="line">housing[&quot;income_cat&quot;].where(housing[&quot;income_cat&quot;] &lt; 5, 5.0, inplace&#x3D;True)</span><br><span class="line">from sklearn.model_selection import StratifiedShuffleSplit</span><br><span class="line">split &#x3D; StratifiedShuffleSplit(n_splits&#x3D;1, test_size&#x3D;0.2, random_state&#x3D;42)</span><br><span class="line">for train_index, test_index in split.split(housing, housing[&quot;income_cat&quot;]):</span><br><span class="line">    strat_train_set &#x3D; housing.loc[train_index]</span><br><span class="line">    strat_test_set &#x3D; housing.loc[test_index]</span><br><span class="line">print(housing[&quot;income_cat&quot;].value_counts() &#x2F; len(housing))</span><br><span class="line">for set in (strat_train_set, strat_test_set):</span><br><span class="line">    set.drop([&quot;income_cat&quot;], axis&#x3D;1, inplace&#x3D;True)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
+<li><p>数据探索和可视化</p>
+<ul>
+<li>创建一个副本<code>housing = strat_train_set.copy()</code></li>
+<li>将地理数据可视化<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#housing.plot(kind&#x3D;&quot;scatter&quot;, x&#x3D;&quot;longitude&quot;, y&#x3D;&quot;latitude&quot;)</span><br><span class="line">housing.plot(kind&#x3D;&quot;scatter&quot;, x&#x3D;&quot;longitude&quot;, y&#x3D;&quot;latitude&quot;, alpha&#x3D;0.1)</span><br><span class="line">housing.plot(kind&#x3D;&quot;scatter&quot;, x&#x3D;&quot;longitude&quot;, y&#x3D;&quot;latitude&quot;, alpha&#x3D;0.4,</span><br><span class="line">s&#x3D;housing[&quot;population&quot;] &#x2F; 100, label&#x3D;&quot;population&quot;,</span><br><span class="line">c&#x3D;&quot;median_house_value&quot;, cmap&#x3D;plt.get_cmap(&quot;jet&quot;), colorbar&#x3D;True,)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></li>
+<li>寻找相关性<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#corr_matrix &#x3D; housing.corr()</span><br><span class="line">#print(corr_matrix[&quot;median_house_value&quot;].sort_values(ascending&#x3D;False))</span><br><span class="line">from pandas.plotting import scatter_matrix #少了tools</span><br><span class="line">attributes &#x3D; [&quot;median_house_value&quot;, &quot;median_income&quot;, &quot;total_rooms&quot;, &quot;housing_median_age&quot;]</span><br><span class="line">scatter_matrix(housing[attributes], figsize&#x3D;(12, 8))</span><br><span class="line">housing.plot(kind&#x3D;&quot;scatter&quot;, x&#x3D;&quot;median_income&quot;, y&#x3D;&quot;median_house_value&quot;, alpha&#x3D;0.1)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>试验不同属性的组合</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">housing[&quot;rooms_per_household&quot;] &#x3D; housing[&quot;total_rooms&quot;]&#x2F;housing[&quot;households&quot;]</span><br><span class="line">housing[&quot;bedrooms_per_room&quot;] &#x3D; housing[&quot;total_bedrooms&quot;]&#x2F;housing[&quot;total_rooms&quot;]</span><br><span class="line">housing[&quot;population_per_household&quot;]&#x3D;housing[&quot;population&quot;]&#x2F;housing[&quot;households&quot;]</span><br><span class="line">corr_matrix &#x3D; housing.corr()</span><br><span class="line">print(corr_matrix[&quot;median_house_value&quot;].sort_values(ascending&#x3D;False))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>机器学习算法的数据准备</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">housing &#x3D; strat_train_set.drop(&quot;median_house_value&quot;, axis&#x3D;1)</span><br><span class="line">housing_labels &#x3D; strat_train_set[&quot;median_house_value&quot;].copy()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>数据清理4选1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#housing.dropna(subset&#x3D;[&quot;total_bedrooms&quot;])    # option 1</span><br><span class="line">#housing.drop(&quot;total_bedrooms&quot;, axis&#x3D;1)       # option 2</span><br><span class="line">#median &#x3D; housing[&quot;total_bedrooms&quot;].median()</span><br><span class="line">#housing[&quot;total_bedrooms&quot;].fillna(median)     # option 3</span><br><span class="line">#option4: Scikit-Learn提供的imputer, 指定你要用属性的中位数值替换该属性的缺失值</span><br><span class="line">from sklearn.impute import SimpleImputer #与书中不同，进化了</span><br><span class="line">imputer &#x3D; SimpleImputer(strategy&#x3D;&quot;median&quot;)   #创建一个imputer实例</span><br><span class="line">housing_num &#x3D; housing.drop(&quot;ocean_proximity&quot;, axis&#x3D;1)   #创建一个没有文本属性的数据副本ocean_proximity</span><br><span class="line">imputer.fit(housing_num)   #使用fit（）方法将imputer实例适配到训练集</span><br><span class="line">#print(imputer.statistics_)</span><br><span class="line">#print(housing_num.median().values)</span><br><span class="line">X &#x3D; imputer.transform(housing_num)   #替换</span><br><span class="line">housing_tr &#x3D; pd.DataFrame(X, columns&#x3D;housing_num.columns)   #放回Pandas DataFrame</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>处理文本和分类属性</p>
+</li>
 </ol>
-<p>housing.hist(bins=50, figsize=(50,15))<br>plt.show()</p>
-<pre><code>
-3. 创建测试集
-   + 
 
-
-
-</code></pre>
       
     </div>
     
@@ -337,7 +351,7 @@
         <p><span>本文标题:</span><a href="/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/">第2章端到端的机器学习项目</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">KissingIce</a></p>
         <p><span>发布时间:</span>2020-03-11, 01:14:42</p>
-        <p><span>最后更新:</span>2020-03-11, 02:15:56</p>
+        <p><span>最后更新:</span>2020-03-12, 01:24:11</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/" title="第2章端到端的机器学习项目">http://yoursite.com/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/　　作者: KissingIce" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
