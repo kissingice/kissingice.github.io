@@ -15,14 +15,14 @@
 
 
 
-<meta name="description" content="下载数据  打开vscode，建立新的python文件，输入以下代码，下载housing.tgz文件，并将housing.csv解压到这个目录123456789101112131415161718import osimport tarfilefrom six.moves import urllibdownload_root &#x3D; &quot;https:&#x2F;&#x2F;raw.g">
+<meta name="description" content="参考：作者的Jupyter Notebook  下载数据  打开vscode，建立新的python文件，输入以下代码，下载housing.tgz文件，并将housing.csv解压到这个目录123456789101112131415161718import osimport tarfilefrom six.moves import urllibdownload_root &#x3D; &quot;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第2章端到端的机器学习项目">
 <meta property="og:url" content="http://yoursite.com/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/index.html">
 <meta property="og:site_name" content="KissingIce">
-<meta property="og:description" content="下载数据  打开vscode，建立新的python文件，输入以下代码，下载housing.tgz文件，并将housing.csv解压到这个目录123456789101112131415161718import osimport tarfilefrom six.moves import urllibdownload_root &#x3D; &quot;https:&#x2F;&#x2F;raw.g">
+<meta property="og:description" content="参考：作者的Jupyter Notebook  下载数据  打开vscode，建立新的python文件，输入以下代码，下载housing.tgz文件，并将housing.csv解压到这个目录123456789101112131415161718import osimport tarfilefrom six.moves import urllibdownload_root &#x3D; &quot;">
 <meta property="article:published_time" content="2020-03-10T17:14:42.000Z">
-<meta property="article:modified_time" content="2020-03-13T15:11:25.827Z">
+<meta property="article:modified_time" content="2020-03-13T15:28:51.593Z">
 <meta property="article:author" content="KissingIce">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
@@ -293,7 +293,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <ol>
+        <p>参考：作者的<a href="https://nbviewer.jupyter.org/github/ageron/handson-ml/tree/master/" target="_blank" rel="noopener">Jupyter Notebook</a></p>
+<ol>
 <li><p>下载数据</p>
 <ul>
 <li>打开vscode，建立新的python文件，输入以下代码，下载housing.tgz文件，并将housing.csv解压到这个目录<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import tarfile</span><br><span class="line">from six.moves import urllib</span><br><span class="line"></span><br><span class="line">download_root &#x3D; &quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ageron&#x2F;handson-ml&#x2F;master&#x2F;&quot;</span><br><span class="line">HOUSING_PATH &#x3D; &quot;datasets&#x2F;housing&quot;</span><br><span class="line">HOUSING_URL &#x3D; download_root + HOUSING_PATH + &quot;&#x2F;housing.tgz&quot;</span><br><span class="line"></span><br><span class="line">def fetch_housing_data(housing_url&#x3D;HOUSING_URL,housing_path&#x3D;HOUSING_PATH):</span><br><span class="line">    if not os.path.isdir(housing_path):</span><br><span class="line">        os.makedirs(housing_path)</span><br><span class="line">    tgz_path &#x3D; os.path.join(housing_path, &quot;housing.tgz&quot;)</span><br><span class="line">    urllib.request.urlretrieve(housing_url, tgz_path)</span><br><span class="line">    housing_tgz &#x3D; tarfile.open(tgz_path)</span><br><span class="line">    housing_tgz.extractall(path&#x3D;housing_path)</span><br><span class="line">    housing_tgz.close()</span><br><span class="line"></span><br><span class="line">fetch_housing_data()</span><br></pre></td></tr></table></figure>
@@ -379,7 +380,7 @@
         <p><span>本文标题:</span><a href="/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/">第2章端到端的机器学习项目</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">KissingIce</a></p>
         <p><span>发布时间:</span>2020-03-11, 01:14:42</p>
-        <p><span>最后更新:</span>2020-03-13, 23:11:25</p>
+        <p><span>最后更新:</span>2020-03-13, 23:28:51</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/" title="第2章端到端的机器学习项目">http://yoursite.com/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/　　作者: KissingIce" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
