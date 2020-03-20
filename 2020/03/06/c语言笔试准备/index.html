@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="KissingIce">
 <meta property="og:description" content="若以下说明语句:char x; float y; double z; 则表达式x-y+z的类型为（double） 。字节转换从低到高 char–&gt;float–&gt;short–&gt;int–&gt;double规律：占用字节数小的类型在与占用字节数大的类型运算时会被转化为占用字节数大的类型。  设int a&#x3D;3,b&#x3D;5,m，执行表达式m&#x3D;a&lt;&#x3D;3&amp;&amp;a+b&lt;">
 <meta property="article:published_time" content="2020-03-06T12:23:02.000Z">
-<meta property="article:modified_time" content="2020-03-10T17:15:56.962Z">
+<meta property="article:modified_time" content="2020-03-20T18:26:49.068Z">
 <meta property="article:author" content="KissingIce">
 <meta property="article:tag" content="c语言">
 <meta name="twitter:card" content="summary">
@@ -312,6 +312,16 @@
 <li>公有继承时，同样继承了基类的私有成员，对基类的公有成员和保护成员的访问属性不变，派生类的新增成员可以访问基类的公有成员和保护成员，但是访问不了基类的私有成员。派生类的对象只能访问派生类的公有成员（包括继承的公有成员），访问不了保护成员和私有成员。</li>
 </ul>
 </li>
+<li><p>可以把<code>z=x&gt;y? x : y</code>理解为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if(x&gt;y)&#123;</span><br><span class="line">z&#x3D;x；</span><br><span class="line">&#125;else&#123;</span><br><span class="line">z&#x3D;y；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于条件表达式b ? x : y，先计算条件b，然后进行判断。如果b的值为true，计算x的值，运算结果为x的值；否则，计算y的值，运算结果为y的值。一个条件表达式绝不会既计算x，又计算y。条件运算符是右结合的，也就是说，从右向左分组计算</p>
+</li>
+<li><p>auto被解释为一个自动存储变量的关键字，也就是申明一块临时的变量内存。<br>其中auto和register对应自动存储期。具有自动存储期的变量在进入声明该变量的程序块时被建立，它在该程序块活动时存在，退出该程序块时撤销。</p>
+</li>
+<li><p>register:这个关键字命令编译器尽可能的将变量存在CPU内部寄存器中而不是通过内存寻址访问以提高效率。如果一个变量被register来修饰，就意味着该变量作为一个寄存器变量，让该变量的访问速度达到最快。</p>
+</li>
+<li><p>全局变量在静态区;局部变量在动态区;static变量在静态区 </p>
+</li>
 </ol>
 
       
@@ -324,7 +334,7 @@
         <p><span>本文标题:</span><a href="/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/">c语言笔试准备</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">KissingIce</a></p>
         <p><span>发布时间:</span>2020-03-06, 20:23:02</p>
-        <p><span>最后更新:</span>2020-03-11, 01:15:56</p>
+        <p><span>最后更新:</span>2020-03-21, 02:26:49</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/" title="c语言笔试准备">http://yoursite.com/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/　　作者: KissingIce" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
