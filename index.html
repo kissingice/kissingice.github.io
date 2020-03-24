@@ -182,7 +182,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/c%E8%AF%AD%E8%A8%80/" rel="tag">c语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/c%E8%AF%AD%E8%A8%80/" rel="tag">c语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
                     </div>
                 </section>
                 
@@ -254,6 +254,71 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-python爬取网页图片" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/03/24/python%E7%88%AC%E5%8F%96%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87/" class="article-date">
+      <time datetime="2020-03-24T12:35:59.000Z" itemprop="datePublished">2020-03-24</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/24/python%E7%88%AC%E5%8F%96%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87/">python爬取网页图片</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>完整代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import re</span><br><span class="line">import urllib</span><br><span class="line">import urllib.request</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_html(url):</span><br><span class="line">    page &#x3D; urllib.request.urlopen(url)</span><br><span class="line">    html_a &#x3D; page.read()</span><br><span class="line">    return html_a.decode(&#39;utf-8&#39;)</span><br><span class="line"></span><br><span class="line">def get_img(url):</span><br><span class="line">    x &#x3D; 1        # 声明一个变量赋值</span><br><span class="line">    html_b &#x3D; get_html(url)</span><br><span class="line">    reg &#x3D; r&#39;https:&#x2F;&#x2F;[^\s]*?\.jpg&#39;</span><br><span class="line">    imgre &#x3D; re.compile(reg)  # 转换成一个正则对象</span><br><span class="line">    imglist &#x3D; imgre.findall(html_b)  # 表示在整个网页过滤出所有图片的地址，放在imgList中</span><br><span class="line">    path &#x3D; os.getcwd() + os.sep + &#39;image&#39;  # 设置图片的保存地址</span><br><span class="line">    if not os.path.isdir(path):</span><br><span class="line">        os.makedirs(path)  # 判断没有此路径则创建</span><br><span class="line">    paths &#x3D; path + &#39;\\&#39;  # 保存在test路径下</span><br><span class="line">    for imgurl in imglist:</span><br><span class="line">        urllib.request.urlretrieve(imgurl, &#39;&#123;0&#125;&#123;1&#125;.jpg&#39;.format(paths, x))  # 打开imgList,下载图片到本地</span><br><span class="line">        print(&#39;开始下载第%s张图片&#39;%x)</span><br><span class="line">        x &#x3D; x + 1</span><br><span class="line"></span><br><span class="line">url &#x3D; input(&quot;请输入网址&quot;)</span><br><span class="line">#url &#x3D; </span><br><span class="line">get_img(url)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-第3章分类" class="article article-type-post" itemscope itemprop="blogPost">
   

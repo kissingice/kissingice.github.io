@@ -15,16 +15,16 @@
 
 
 
-<meta name="description" content="若以下说明语句:char x; float y; double z; 则表达式x-y+z的类型为（double） 。字节转换从低到高 char–&gt;float–&gt;short–&gt;int–&gt;double规律：占用字节数小的类型在与占用字节数大的类型运算时会被转化为占用字节数大的类型。  设int a&#x3D;3,b&#x3D;5,m，执行表达式m&#x3D;a&lt;&#x3D;3&amp;&amp;a+b&lt;">
+<meta name="description" content="完整代码如下 1234567891011121314151617181920212223242526272829import osimport reimport urllibimport urllib.requestdef get_html(url):    page &#x3D; urllib.request.urlopen(url)    html_a &#x3D; page.read()">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c语言笔试准备">
-<meta property="og:url" content="http://yoursite.com/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/index.html">
+<meta property="og:title" content="python爬取网页图片">
+<meta property="og:url" content="http://yoursite.com/2020/03/24/python%E7%88%AC%E5%8F%96%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87/index.html">
 <meta property="og:site_name" content="KissingIce">
-<meta property="og:description" content="若以下说明语句:char x; float y; double z; 则表达式x-y+z的类型为（double） 。字节转换从低到高 char–&gt;float–&gt;short–&gt;int–&gt;double规律：占用字节数小的类型在与占用字节数大的类型运算时会被转化为占用字节数大的类型。  设int a&#x3D;3,b&#x3D;5,m，执行表达式m&#x3D;a&lt;&#x3D;3&amp;&amp;a+b&lt;">
-<meta property="article:published_time" content="2020-03-06T12:23:02.000Z">
-<meta property="article:modified_time" content="2020-03-20T18:26:49.068Z">
+<meta property="og:description" content="完整代码如下 1234567891011121314151617181920212223242526272829import osimport reimport urllibimport urllib.requestdef get_html(url):    page &#x3D; urllib.request.urlopen(url)    html_a &#x3D; page.read()">
+<meta property="article:published_time" content="2020-03-24T12:35:59.000Z">
+<meta property="article:modified_time" content="2020-03-24T12:37:41.992Z">
 <meta property="article:author" content="KissingIce">
-<meta property="article:tag" content="c语言">
+<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -59,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>c语言笔试准备 | KissingIce</title>
+<title>python爬取网页图片 | KissingIce</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -253,11 +253,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-c语言笔试准备" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-python爬取网页图片" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/" class="article-date">
-      <time datetime="2020-03-06T12:23:02.000Z" itemprop="datePublished">2020-03-06</time>
+      <a href="/2020/03/24/python%E7%88%AC%E5%8F%96%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87/" class="article-date">
+      <time datetime="2020-03-24T12:35:59.000Z" itemprop="datePublished">2020-03-24</time>
 </a>
 
 
@@ -272,7 +272,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      c语言笔试准备
+      python爬取网页图片
     </h1>
   
 
@@ -283,7 +283,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c%E8%AF%AD%E8%A8%80/" rel="tag">c语言</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -293,36 +293,12 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <ol>
-<li><p>若以下说明语句:char x; float y; double z; 则表达式x-y+z的类型为（double） 。<br>字节转换从低到高 char–&gt;float–&gt;short–&gt;int–&gt;double<br>规律：占用字节数小的类型在与占用字节数大的类型运算时会被转化为占用<strong>字节数大</strong>的类型。</p>
-</li>
-<li><p>设int a=3,b=5,m，执行表达式m=a&lt;=3&amp;&amp;a+b&lt;8后，m的值为 （0）<br><strong>！ &gt; 算术运算符 &gt; 关系运算符 &gt; &amp;&amp; &gt; || &gt; 赋值运算符</strong><br>m是整型，因此将false转为整型即为0。<br>m=1&amp;&amp;0<br>m=0</p>
-</li>
-<li><p>用数组名作函数实参时，形参可以用同类型的指针变量。<br>比如数组<br>int S[10];<br>数组名S可以理解为就是指向数组首地址的指针，即 S 和 &amp;S[0] 等价，*S和S[0]等价， 数组名作函数实参时，参数类型就是指向整型的指针</p>
-</li>
-<li><p>字符型数据在计算机内部是以ASCII码存储的，数字、英文大写字母和小写字母在ASCII码表中都是连续的。<strong>数字字符‘0’<del>‘9’是48</del>57</strong>，大写字母A～Z是从65～90，<strong>小写字母a～z是从97～122</strong>。</p>
-</li>
-<li><p>数组可以在<strong>定义</strong>时整体赋初值，但不能在赋值语句中整体赋值。</p>
-</li>
-<li><p>继承方式和可见性</p>
-<ul>
-<li>公有继承意味着继承派生类的类能访问基类的公有和保护成员。私有继承意味着继承派生类的类也不能访问基类的成员。保护继承意味着继承派生类的类能访问基类的公有和保护方法。</li>
-<li>默认为私有继承，但常用的却是公有继承。</li>
-<li>基类的私有成员在派生类中都是不可见的，如果一个派生类要访问基类中声明的私有成员，可以将这个派生类声明为友元。</li>
-<li>公有继承时，同样继承了基类的私有成员，对基类的公有成员和保护成员的访问属性不变，派生类的新增成员可以访问基类的公有成员和保护成员，但是访问不了基类的私有成员。派生类的对象只能访问派生类的公有成员（包括继承的公有成员），访问不了保护成员和私有成员。</li>
-</ul>
-</li>
-<li><p>可以把<code>z=x&gt;y? x : y</code>理解为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if(x&gt;y)&#123;</span><br><span class="line">z&#x3D;x；</span><br><span class="line">&#125;else&#123;</span><br><span class="line">z&#x3D;y；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>对于条件表达式b ? x : y，先计算条件b，然后进行判断。如果b的值为true，计算x的值，运算结果为x的值；否则，计算y的值，运算结果为y的值。一个条件表达式绝不会既计算x，又计算y。条件运算符是右结合的，也就是说，从右向左分组计算</p>
-</li>
-<li><p>auto被解释为一个自动存储变量的关键字，也就是申明一块临时的变量内存。<br>其中auto和register对应自动存储期。具有自动存储期的变量在进入声明该变量的程序块时被建立，它在该程序块活动时存在，退出该程序块时撤销。</p>
-</li>
-<li><p>register:这个关键字命令编译器尽可能的将变量存在CPU内部寄存器中而不是通过内存寻址访问以提高效率。如果一个变量被register来修饰，就意味着该变量作为一个寄存器变量，让该变量的访问速度达到最快。</p>
-</li>
-<li><p>全局变量在静态区;局部变量在动态区;static变量在静态区 </p>
-</li>
-</ol>
+        <p>完整代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import re</span><br><span class="line">import urllib</span><br><span class="line">import urllib.request</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_html(url):</span><br><span class="line">    page &#x3D; urllib.request.urlopen(url)</span><br><span class="line">    html_a &#x3D; page.read()</span><br><span class="line">    return html_a.decode(&#39;utf-8&#39;)</span><br><span class="line"></span><br><span class="line">def get_img(url):</span><br><span class="line">    x &#x3D; 1        # 声明一个变量赋值</span><br><span class="line">    html_b &#x3D; get_html(url)</span><br><span class="line">    reg &#x3D; r&#39;https:&#x2F;&#x2F;[^\s]*?\.jpg&#39;</span><br><span class="line">    imgre &#x3D; re.compile(reg)  # 转换成一个正则对象</span><br><span class="line">    imglist &#x3D; imgre.findall(html_b)  # 表示在整个网页过滤出所有图片的地址，放在imgList中</span><br><span class="line">    path &#x3D; os.getcwd() + os.sep + &#39;image&#39;  # 设置图片的保存地址</span><br><span class="line">    if not os.path.isdir(path):</span><br><span class="line">        os.makedirs(path)  # 判断没有此路径则创建</span><br><span class="line">    paths &#x3D; path + &#39;\\&#39;  # 保存在test路径下</span><br><span class="line">    for imgurl in imglist:</span><br><span class="line">        urllib.request.urlretrieve(imgurl, &#39;&#123;0&#125;&#123;1&#125;.jpg&#39;.format(paths, x))  # 打开imgList,下载图片到本地</span><br><span class="line">        print(&#39;开始下载第%s张图片&#39;%x)</span><br><span class="line">        x &#x3D; x + 1</span><br><span class="line"></span><br><span class="line">url &#x3D; input(&quot;请输入网址&quot;)</span><br><span class="line">#url &#x3D; </span><br><span class="line">get_img(url)</span><br></pre></td></tr></table></figure>
+
+
+
+
 
       
     </div>
@@ -331,13 +307,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/">c语言笔试准备</a></p>
+        <p><span>本文标题:</span><a href="/2020/03/24/python%E7%88%AC%E5%8F%96%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87/">python爬取网页图片</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">KissingIce</a></p>
-        <p><span>发布时间:</span>2020-03-06, 20:23:02</p>
-        <p><span>最后更新:</span>2020-03-21, 02:26:49</p>
+        <p><span>发布时间:</span>2020-03-24, 20:35:59</p>
+        <p><span>最后更新:</span>2020-03-24, 20:37:41</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/" title="c语言笔试准备">http://yoursite.com/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/　　作者: KissingIce" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/03/24/python%E7%88%AC%E5%8F%96%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87/" title="python爬取网页图片">http://yoursite.com/2020/03/24/python%E7%88%AC%E5%8F%96%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2020/03/24/python%E7%88%AC%E5%8F%96%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87/　　作者: KissingIce" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -349,16 +325,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/">
-                    第2章端到端的机器学习项目
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2020/03/05/c%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/">
-                    c语言面试准备
+                <a href="/2020/03/18/%E7%AC%AC3%E7%AB%A0%E5%88%86%E7%B1%BB/">
+                    第3章分类
                 </a>
             </div>
         
@@ -406,7 +376,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"c语言笔试准备　| KissingIce　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"python爬取网页图片　| KissingIce　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -426,15 +396,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/" title="上一篇: 第2章端到端的机器学习项目">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2020/03/05/c%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/" title="下一篇: c语言面试准备">
+            <a href="/2020/03/18/%E7%AC%AC3%E7%AB%A0%E5%88%86%E7%B1%BB/" title="下一篇: 第3章分类">
                 <i class="fa fa-angle-right"></i>
             </a>
         
