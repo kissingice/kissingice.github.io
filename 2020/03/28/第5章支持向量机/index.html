@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh_Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="KissingIce" />
+
+
+
+<meta name="description" content="参考：作者的Jupyter NotebookChapter 5 – Support Vector Machines 支持向量机（简称SVM）是一个功能强大并且全面的机器学习模型，它能够执行线性或非线性分类、回归，甚至是异常值检测任务。它是机器学习领域最受欢迎的模型之一，任何对机器学习感兴趣的人都应该在工具箱中配备一个。SVM特别适用于中小型复杂数据集的分类。  保存图片 1234567891011">
+<meta property="og:type" content="article">
+<meta property="og:title" content="支持向量机">
+<meta property="og:url" content="http://yoursite.com/2020/03/28/%E7%AC%AC5%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/index.html">
+<meta property="og:site_name" content="KissingIce">
+<meta property="og:description" content="参考：作者的Jupyter NotebookChapter 5 – Support Vector Machines 支持向量机（简称SVM）是一个功能强大并且全面的机器学习模型，它能够执行线性或非线性分类、回归，甚至是异常值检测任务。它是机器学习领域最受欢迎的模型之一，任何对机器学习感兴趣的人都应该在工具箱中配备一个。SVM特别适用于中小型复杂数据集的分类。  保存图片 1234567891011">
+<meta property="article:published_time" content="2020-03-28T07:51:40.000Z">
+<meta property="article:modified_time" content="2020-03-28T09:39:33.418Z">
+<meta property="article:author" content="KissingIce">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="KissingIce" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>支持向量机 | KissingIce</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: 
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">KissingIce</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="/3185849736@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/c%E8%AF%AD%E8%A8%80/" rel="tag">c语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/" target="_blank" rel="noopener">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/" target="_blank" rel="noopener">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">KissingIce</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">KissingIce</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="/3185849736@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-第5章支持向量机" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/03/28/%E7%AC%AC5%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" class="article-date">
+      <time datetime="2020-03-28T07:51:40.000Z" itemprop="datePublished">2020-03-28</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      支持向量机
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>参考：作者的<a href="https://nbviewer.jupyter.org/github/ageron/handson-ml/tree/master/" target="_blank" rel="noopener">Jupyter Notebook</a><br><a href="https://nbviewer.jupyter.org/github/ageron/handson-ml/blob/master/05_support_vector_machines.ipynb" target="_blank" rel="noopener">Chapter 5 – Support Vector Machines</a></p>
+<p>支持向量机（简称SVM）是一个功能强大并且全面的机器学习模型，它能够执行线性或非线性分类、回归，甚至是异常值检测任务。它是机器学习领域最受欢迎的模型之一，任何对机器学习感兴趣的人都应该在工具箱中配备一个。SVM特别适用于中小型复杂数据集的分类。</p>
+<ol>
+<li>保存图片 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">from __future__ import division, print_function, unicode_literals</span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib as mpl</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import os</span><br><span class="line">np.random.seed(42)</span><br><span class="line"></span><br><span class="line">mpl.rc(&#39;axes&#39;, labelsize&#x3D;14)</span><br><span class="line">mpl.rc(&#39;xtick&#39;, labelsize&#x3D;12)</span><br><span class="line">mpl.rc(&#39;ytick&#39;, labelsize&#x3D;12)</span><br><span class="line"></span><br><span class="line"># Where to save the figures</span><br><span class="line">PROJECT_ROOT_DIR &#x3D; &quot;images&quot;</span><br><span class="line">CHAPTER_ID &#x3D; &quot;traininglinearmodels&quot;</span><br><span class="line"></span><br><span class="line">def save_fig(fig_id, tight_layout&#x3D;True):</span><br><span class="line">    path &#x3D; os.path.join(PROJECT_ROOT_DIR, CHAPTER_ID, fig_id + &quot;.png&quot;)</span><br><span class="line">    print(&quot;Saving figure&quot;, fig_id)</span><br><span class="line">    if tight_layout:</span><br><span class="line">        plt.tight_layout()</span><br><span class="line">    plt.savefig(path, format&#x3D;&#39;png&#39;, dpi&#x3D;600)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="线性SVM分类"><a href="#线性SVM分类" class="headerlink" title="线性SVM分类"></a>线性SVM分类</h4><ol start="2">
+<li>加载鸢尾花数据集，缩放特征，然后训练一个线性SVM模型（使用LinearSVC类，C=0.1，用即将介绍的hinge损失函数）用来检测Virginica鸢尾花。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.svm import SVC</span><br><span class="line">from sklearn import datasets</span><br><span class="line"></span><br><span class="line">iris &#x3D; datasets.load_iris()</span><br><span class="line">X &#x3D; iris[&quot;data&quot;][:, (2, 3)]  # petal length, petal width</span><br><span class="line">y &#x3D; iris[&quot;target&quot;]</span><br><span class="line"></span><br><span class="line">setosa_or_versicolor &#x3D; (y &#x3D;&#x3D; 0) | (y &#x3D;&#x3D; 1)</span><br><span class="line">X &#x3D; X[setosa_or_versicolor]</span><br><span class="line">y &#x3D; y[setosa_or_versicolor]</span><br><span class="line"></span><br><span class="line"># SVM Classifier model</span><br><span class="line">svm_clf &#x3D; SVC(kernel&#x3D;&quot;linear&quot;, C&#x3D;float(&quot;inf&quot;))</span><br><span class="line">print(svm_clf.fit(X, y))</span><br><span class="line"></span><br><span class="line"># Bad models</span><br><span class="line">x0 &#x3D; np.linspace(0, 5.5, 200)</span><br><span class="line">pred_1 &#x3D; 5*x0 - 20</span><br><span class="line">pred_2 &#x3D; x0 - 1.8</span><br><span class="line">pred_3 &#x3D; 0.1 * x0 + 0.5</span><br><span class="line"></span><br><span class="line">def plot_svc_decision_boundary(svm_clf, xmin, xmax):</span><br><span class="line">    w &#x3D; svm_clf.coef_[0]</span><br><span class="line">    b &#x3D; svm_clf.intercept_[0]</span><br><span class="line"></span><br><span class="line">    # At the decision boundary, w0*x0 + w1*x1 + b &#x3D; 0</span><br><span class="line">    # &#x3D;&gt; x1 &#x3D; -w0&#x2F;w1 * x0 - b&#x2F;w1</span><br><span class="line">    x0 &#x3D; np.linspace(xmin, xmax, 200)</span><br><span class="line">    decision_boundary &#x3D; -w[0]&#x2F;w[1] * x0 - b&#x2F;w[1]</span><br><span class="line"></span><br><span class="line">    margin &#x3D; 1&#x2F;w[1]</span><br><span class="line">    gutter_up &#x3D; decision_boundary + margin</span><br><span class="line">    gutter_down &#x3D; decision_boundary - margin</span><br><span class="line"></span><br><span class="line">    svs &#x3D; svm_clf.support_vectors_</span><br><span class="line">    plt.scatter(svs[:, 0], svs[:, 1], s&#x3D;180, facecolors&#x3D;&#39;#FFAAAA&#39;)</span><br><span class="line">    plt.plot(x0, decision_boundary, &quot;k-&quot;, linewidth&#x3D;2)</span><br><span class="line">    plt.plot(x0, gutter_up, &quot;k--&quot;, linewidth&#x3D;2)</span><br><span class="line">    plt.plot(x0, gutter_down, &quot;k--&quot;, linewidth&#x3D;2)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize&#x3D;(12,2.7))</span><br><span class="line"></span><br><span class="line">plt.subplot(121)</span><br><span class="line">plt.plot(x0, pred_1, &quot;g--&quot;, linewidth&#x3D;2)</span><br><span class="line">plt.plot(x0, pred_2, &quot;m-&quot;, linewidth&#x3D;2)</span><br><span class="line">plt.plot(x0, pred_3, &quot;r-&quot;, linewidth&#x3D;2)</span><br><span class="line">plt.plot(X[:, 0][y&#x3D;&#x3D;1], X[:, 1][y&#x3D;&#x3D;1], &quot;bs&quot;, label&#x3D;&quot;Iris-Versicolor&quot;)</span><br><span class="line">plt.plot(X[:, 0][y&#x3D;&#x3D;0], X[:, 1][y&#x3D;&#x3D;0], &quot;yo&quot;, label&#x3D;&quot;Iris-Setosa&quot;)</span><br><span class="line">plt.xlabel(&quot;Petal length&quot;, fontsize&#x3D;14)</span><br><span class="line">plt.ylabel(&quot;Petal width&quot;, fontsize&#x3D;14)</span><br><span class="line">plt.legend(loc&#x3D;&quot;upper left&quot;, fontsize&#x3D;14)</span><br><span class="line">plt.axis([0, 5.5, 0, 2])</span><br><span class="line"></span><br><span class="line">plt.subplot(122)</span><br><span class="line">plot_svc_decision_boundary(svm_clf, 0, 5.5)</span><br><span class="line">plt.plot(X[:, 0][y&#x3D;&#x3D;1], X[:, 1][y&#x3D;&#x3D;1], &quot;bs&quot;)</span><br><span class="line">plt.plot(X[:, 0][y&#x3D;&#x3D;0], X[:, 1][y&#x3D;&#x3D;0], &quot;yo&quot;)</span><br><span class="line">plt.xlabel(&quot;Petal length&quot;, fontsize&#x3D;14)</span><br><span class="line">plt.axis([0, 5.5, 0, 2])</span><br><span class="line"></span><br><span class="line">save_fig(&quot;large_margin_classification_plot较少间隔违例和大间隔对比&quot;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="非线性SVM分类"><a href="#非线性SVM分类" class="headerlink" title="非线性SVM分类"></a>非线性SVM分类</h4><ol start="3">
+<li><p>通过添加特征使数据集线性可分离</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">X1D &#x3D; np.linspace(-4, 4, 9).reshape(-1, 1)</span><br><span class="line">X2D &#x3D; np.c_[X1D, X1D**2]</span><br><span class="line">y &#x3D; np.array([0, 0, 1, 1, 1, 1, 1, 0, 0])</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line">plt.figure(figsize&#x3D;(11, 4))</span><br><span class="line"></span><br><span class="line">plt.subplot(121)</span><br><span class="line">plt.grid(True, which&#x3D;&#39;both&#39;)</span><br><span class="line">plt.axhline(y&#x3D;0, color&#x3D;&#39;k&#39;)</span><br><span class="line">plt.plot(X1D[:, 0][y&#x3D;&#x3D;0], np.zeros(4), &quot;bs&quot;)</span><br><span class="line">plt.plot(X1D[:, 0][y&#x3D;&#x3D;1], np.zeros(5), &quot;g^&quot;)</span><br><span class="line">plt.gca().get_yaxis().set_ticks([])</span><br><span class="line">plt.xlabel(r&quot;$x_1$&quot;, fontsize&#x3D;20)</span><br><span class="line">plt.axis([-4.5, 4.5, -0.2, 0.2])</span><br><span class="line"></span><br><span class="line">plt.subplot(122)</span><br><span class="line">plt.grid(True, which&#x3D;&#39;both&#39;)</span><br><span class="line">plt.axhline(y&#x3D;0, color&#x3D;&#39;k&#39;)</span><br><span class="line">plt.axvline(x&#x3D;0, color&#x3D;&#39;k&#39;)</span><br><span class="line">plt.plot(X2D[:, 0][y&#x3D;&#x3D;0], X2D[:, 1][y&#x3D;&#x3D;0], &quot;bs&quot;)</span><br><span class="line">plt.plot(X2D[:, 0][y&#x3D;&#x3D;1], X2D[:, 1][y&#x3D;&#x3D;1], &quot;g^&quot;)</span><br><span class="line">plt.xlabel(r&quot;$x_1$&quot;, fontsize&#x3D;20)</span><br><span class="line">plt.ylabel(r&quot;$x_2$&quot;, fontsize&#x3D;20, rotation&#x3D;0)</span><br><span class="line">plt.gca().get_yaxis().set_ticks([0, 4, 8, 12, 16])</span><br><span class="line">plt.plot([-4.5, 4.5], [6.5, 6.5], &quot;r--&quot;, linewidth&#x3D;3)</span><br><span class="line">plt.axis([-4.5, 4.5, -1, 17])</span><br><span class="line"></span><br><span class="line">plt.subplots_adjust(right&#x3D;1)</span><br><span class="line"></span><br><span class="line">save_fig(&quot;higher_dimensions_plot&quot;, tight_layout&#x3D;False)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>要使用Scikit-Learn实现这个想法，可以搭建一条流水线：一个PolynomialFeatures转换器，接着一个StandardScaler，然后是LinearSVC。我们用卫星数据集来测试一下</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line">from sklearn.svm import LinearSVC</span><br><span class="line">from sklearn.datasets import make_moons</span><br><span class="line">X, y &#x3D; make_moons(n_samples&#x3D;100, noise&#x3D;0.15, random_state&#x3D;42)</span><br><span class="line"></span><br><span class="line">def plot_dataset(X, y, axes):</span><br><span class="line">    plt.plot(X[:, 0][y&#x3D;&#x3D;0], X[:, 1][y&#x3D;&#x3D;0], &quot;bs&quot;)</span><br><span class="line">    plt.plot(X[:, 0][y&#x3D;&#x3D;1], X[:, 1][y&#x3D;&#x3D;1], &quot;g^&quot;)</span><br><span class="line">    plt.axis(axes)</span><br><span class="line">    plt.grid(True, which&#x3D;&#39;both&#39;)</span><br><span class="line">    plt.xlabel(r&quot;$x_1$&quot;, fontsize&#x3D;20)</span><br><span class="line">    plt.ylabel(r&quot;$x_2$&quot;, fontsize&#x3D;20, rotation&#x3D;0)</span><br><span class="line"></span><br><span class="line">#plot_dataset(X, y, [-1.5, 2.5, -1, 1.5])</span><br><span class="line">#plt.show()</span><br><span class="line"></span><br><span class="line">from sklearn.datasets import make_moons</span><br><span class="line">from sklearn.pipeline import Pipeline</span><br><span class="line">from sklearn.preprocessing import PolynomialFeatures</span><br><span class="line"></span><br><span class="line">polynomial_svm_clf &#x3D; Pipeline([</span><br><span class="line">        (&quot;poly_features&quot;, PolynomialFeatures(degree&#x3D;3)),</span><br><span class="line">        (&quot;scaler&quot;, StandardScaler()),</span><br><span class="line">        (&quot;svm_clf&quot;, LinearSVC(C&#x3D;10, loss&#x3D;&quot;hinge&quot;, random_state&#x3D;42))</span><br><span class="line">    ])</span><br><span class="line"></span><br><span class="line">polynomial_svm_clf.fit(X, y)</span><br><span class="line"></span><br><span class="line">def plot_predictions(clf, axes):</span><br><span class="line">    x0s &#x3D; np.linspace(axes[0], axes[1], 100)</span><br><span class="line">    x1s &#x3D; np.linspace(axes[2], axes[3], 100)</span><br><span class="line">    x0, x1 &#x3D; np.meshgrid(x0s, x1s)</span><br><span class="line">    X &#x3D; np.c_[x0.ravel(), x1.ravel()]</span><br><span class="line">    y_pred &#x3D; clf.predict(X).reshape(x0.shape)</span><br><span class="line">    y_decision &#x3D; clf.decision_function(X).reshape(x0.shape)</span><br><span class="line">    plt.contourf(x0, x1, y_pred, cmap&#x3D;plt.cm.brg, alpha&#x3D;0.2)</span><br><span class="line">    plt.contourf(x0, x1, y_decision, cmap&#x3D;plt.cm.brg, alpha&#x3D;0.1)</span><br><span class="line"></span><br><span class="line">plot_predictions(polynomial_svm_clf, [-1.5, 2.5, -1, 1.5])</span><br><span class="line">plot_dataset(X, y, [-1.5, 2.5, -1, 1.5])</span><br><span class="line"></span><br><span class="line">save_fig(&quot;moons_polynomial_svc_plot&quot;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多项式核</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.svm import SVC</span><br><span class="line"></span><br><span class="line">poly_kernel_svm_clf &#x3D; Pipeline([</span><br><span class="line">        (&quot;scaler&quot;, StandardScaler()),</span><br><span class="line">        (&quot;svm_clf&quot;, SVC(kernel&#x3D;&quot;poly&quot;, degree&#x3D;3, coef0&#x3D;1, C&#x3D;5))</span><br><span class="line">    ])</span><br><span class="line">poly_kernel_svm_clf.fit(X, y)</span><br><span class="line">#print(poly_kernel_svm_clf.fit(X, y))</span><br><span class="line"></span><br><span class="line">poly100_kernel_svm_clf &#x3D; Pipeline([</span><br><span class="line">        (&quot;scaler&quot;, StandardScaler()),</span><br><span class="line">        (&quot;svm_clf&quot;, SVC(kernel&#x3D;&quot;poly&quot;, degree&#x3D;10, coef0&#x3D;100, C&#x3D;5))</span><br><span class="line">    ])</span><br><span class="line">poly100_kernel_svm_clf.fit(X, y)</span><br><span class="line">#print(poly100_kernel_svm_clf.fit(X, y))</span><br><span class="line"></span><br><span class="line">plt.figure(figsize&#x3D;(11, 4))</span><br><span class="line"></span><br><span class="line">plt.subplot(121)</span><br><span class="line">plot_predictions(poly_kernel_svm_clf, [-1.5, 2.5, -1, 1.5])</span><br><span class="line">plot_dataset(X, y, [-1.5, 2.5, -1, 1.5])</span><br><span class="line">plt.title(r&quot;$d&#x3D;3, r&#x3D;1, C&#x3D;5$&quot;, fontsize&#x3D;18)</span><br><span class="line"></span><br><span class="line">plt.subplot(122)</span><br><span class="line">plot_predictions(poly100_kernel_svm_clf, [-1.5, 2.5, -1, 1.5])</span><br><span class="line">plot_dataset(X, y, [-1.5, 2.5, -1, 1.5])</span><br><span class="line">plt.title(r&quot;$d&#x3D;10, r&#x3D;100, C&#x3D;5$&quot;, fontsize&#x3D;18)</span><br><span class="line"></span><br><span class="line">save_fig(&quot;moons_kernelized_polynomial_svc_plot&quot;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加相似特征</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">def gaussian_rbf(x, landmark, gamma):</span><br><span class="line">    return np.exp(-gamma * np.linalg.norm(x - landmark, axis&#x3D;1)**2)</span><br><span class="line"></span><br><span class="line">gamma &#x3D; 0.3</span><br><span class="line"></span><br><span class="line">x1s &#x3D; np.linspace(-4.5, 4.5, 200).reshape(-1, 1)</span><br><span class="line">x2s &#x3D; gaussian_rbf(x1s, -2, gamma)</span><br><span class="line">x3s &#x3D; gaussian_rbf(x1s, 1, gamma)</span><br><span class="line"></span><br><span class="line">XK &#x3D; np.c_[gaussian_rbf(X1D, -2, gamma), gaussian_rbf(X1D, 1, gamma)]</span><br><span class="line">yk &#x3D; np.array([0, 0, 1, 1, 1, 1, 1, 0, 0])</span><br><span class="line"></span><br><span class="line">plt.figure(figsize&#x3D;(11, 4))</span><br><span class="line"></span><br><span class="line">plt.subplot(121)</span><br><span class="line">plt.grid(True, which&#x3D;&#39;both&#39;)</span><br><span class="line">plt.axhline(y&#x3D;0, color&#x3D;&#39;k&#39;)</span><br><span class="line">plt.scatter(x&#x3D;[-2, 1], y&#x3D;[0, 0], s&#x3D;150, alpha&#x3D;0.5, c&#x3D;&quot;red&quot;)</span><br><span class="line">plt.plot(X1D[:, 0][yk&#x3D;&#x3D;0], np.zeros(4), &quot;bs&quot;)</span><br><span class="line">plt.plot(X1D[:, 0][yk&#x3D;&#x3D;1], np.zeros(5), &quot;g^&quot;)</span><br><span class="line">plt.plot(x1s, x2s, &quot;g--&quot;)</span><br><span class="line">plt.plot(x1s, x3s, &quot;b:&quot;)</span><br><span class="line">plt.gca().get_yaxis().set_ticks([0, 0.25, 0.5, 0.75, 1])</span><br><span class="line">plt.xlabel(r&quot;$x_1$&quot;, fontsize&#x3D;20)</span><br><span class="line">plt.ylabel(r&quot;Similarity&quot;, fontsize&#x3D;14)</span><br><span class="line">plt.annotate(r&#39;$\mathbf&#123;x&#125;$&#39;,</span><br><span class="line">            xy&#x3D;(X1D[3, 0], 0),</span><br><span class="line">            xytext&#x3D;(-0.5, 0.20),</span><br><span class="line">            ha&#x3D;&quot;center&quot;,</span><br><span class="line">            arrowprops&#x3D;dict(facecolor&#x3D;&#39;black&#39;, shrink&#x3D;0.1),</span><br><span class="line">            fontsize&#x3D;18,</span><br><span class="line">            )</span><br><span class="line">plt.text(-2, 0.9, &quot;$x_2$&quot;, ha&#x3D;&quot;center&quot;, fontsize&#x3D;20)</span><br><span class="line">plt.text(1, 0.9, &quot;$x_3$&quot;, ha&#x3D;&quot;center&quot;, fontsize&#x3D;20)</span><br><span class="line">plt.axis([-4.5, 4.5, -0.1, 1.1])</span><br><span class="line"></span><br><span class="line">plt.subplot(122)</span><br><span class="line">plt.grid(True, which&#x3D;&#39;both&#39;)</span><br><span class="line">plt.axhline(y&#x3D;0, color&#x3D;&#39;k&#39;)</span><br><span class="line">plt.axvline(x&#x3D;0, color&#x3D;&#39;k&#39;)</span><br><span class="line">plt.plot(XK[:, 0][yk&#x3D;&#x3D;0], XK[:, 1][yk&#x3D;&#x3D;0], &quot;bs&quot;)</span><br><span class="line">plt.plot(XK[:, 0][yk&#x3D;&#x3D;1], XK[:, 1][yk&#x3D;&#x3D;1], &quot;g^&quot;)</span><br><span class="line">plt.xlabel(r&quot;$x_2$&quot;, fontsize&#x3D;20)</span><br><span class="line">plt.ylabel(r&quot;$x_3$  &quot;, fontsize&#x3D;20, rotation&#x3D;0)</span><br><span class="line">plt.annotate(r&#39;$\phi\left(\mathbf&#123;x&#125;\right)$&#39;,</span><br><span class="line">            xy&#x3D;(XK[3, 0], XK[3, 1]),</span><br><span class="line">            xytext&#x3D;(0.65, 0.50),</span><br><span class="line">            ha&#x3D;&quot;center&quot;,</span><br><span class="line">            arrowprops&#x3D;dict(facecolor&#x3D;&#39;black&#39;, shrink&#x3D;0.1),</span><br><span class="line">            fontsize&#x3D;18,</span><br><span class="line">            )</span><br><span class="line">plt.plot([-0.1, 1.1], [0.57, -0.1], &quot;r--&quot;, linewidth&#x3D;3)</span><br><span class="line">plt.axis([-0.1, 1.1, -0.1, 1.1])</span><br><span class="line">    </span><br><span class="line">plt.subplots_adjust(right&#x3D;1)</span><br><span class="line"></span><br><span class="line">#save_fig(&quot;kernel_method_plot&quot;)</span><br><span class="line">#plt.show()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>高斯RBF</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x1_example &#x3D; X1D[3, 0]</span><br><span class="line">for landmark in (-2, 1):</span><br><span class="line">    k &#x3D; gaussian_rbf(np.array([[x1_example]]), np.array([[landmark]]), gamma)</span><br><span class="line">    print(&quot;Phi(&#123;&#125;, &#123;&#125;) &#x3D; &#123;&#125;&quot;.format(x1_example, landmark, k))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用SVC类试试高斯RBF核</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">rbf_kernel_svm_clf &#x3D; Pipeline([</span><br><span class="line">        (&quot;scaler&quot;, StandardScaler()),</span><br><span class="line">        (&quot;svm_clf&quot;, SVC(kernel&#x3D;&quot;rbf&quot;, gamma&#x3D;5, C&#x3D;0.001))</span><br><span class="line">    ])</span><br><span class="line">rbf_kernel_svm_clf.fit(X, y)</span><br><span class="line">print(rbf_kernel_svm_clf.fit(X, y))</span><br><span class="line"></span><br><span class="line">from sklearn.svm import SVC</span><br><span class="line"></span><br><span class="line">gamma1, gamma2 &#x3D; 0.1, 5</span><br><span class="line">C1, C2 &#x3D; 0.001, 1000</span><br><span class="line">hyperparams &#x3D; (gamma1, C1), (gamma1, C2), (gamma2, C1), (gamma2, C2)</span><br><span class="line"></span><br><span class="line">svm_clfs &#x3D; []</span><br><span class="line">for gamma, C in hyperparams:</span><br><span class="line">    rbf_kernel_svm_clf &#x3D; Pipeline([</span><br><span class="line">            (&quot;scaler&quot;, StandardScaler()),</span><br><span class="line">            (&quot;svm_clf&quot;, SVC(kernel&#x3D;&quot;rbf&quot;, gamma&#x3D;gamma, C&#x3D;C))</span><br><span class="line">        ])</span><br><span class="line">    rbf_kernel_svm_clf.fit(X, y)</span><br><span class="line">    svm_clfs.append(rbf_kernel_svm_clf)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize&#x3D;(11, 7))</span><br><span class="line"></span><br><span class="line">for i, svm_clf in enumerate(svm_clfs):</span><br><span class="line">    plt.subplot(221 + i)</span><br><span class="line">    plot_predictions(svm_clf, [-1.5, 2.5, -1, 1.5])</span><br><span class="line">    plot_dataset(X, y, [-1.5, 2.5, -1, 1.5])</span><br><span class="line">    gamma, C &#x3D; hyperparams[i]</span><br><span class="line">    plt.title(r&quot;$\gamma &#x3D; &#123;&#125;, C &#x3D; &#123;&#125;$&quot;.format(gamma, C), fontsize&#x3D;16)</span><br><span class="line">#使用RBF核的SVM分类器</span><br><span class="line">save_fig(&quot;moons_rbf_svc_plot&quot;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="SVM回归"><a href="#SVM回归" class="headerlink" title="SVM回归"></a>SVM回归</h4><ol start="9">
+<li><p>SVM回归</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">np.random.seed(42)</span><br><span class="line">m &#x3D; 50</span><br><span class="line">X &#x3D; 2 * np.random.rand(m, 1)</span><br><span class="line">y &#x3D; (4 + 3 * X + np.random.randn(m, 1)).ravel()</span><br><span class="line"></span><br><span class="line">from sklearn.svm import LinearSVR</span><br><span class="line"></span><br><span class="line">svm_reg &#x3D; LinearSVR(epsilon&#x3D;1.5, random_state&#x3D;42)</span><br><span class="line">svm_reg.fit(X, y)</span><br><span class="line"></span><br><span class="line">svm_reg1 &#x3D; LinearSVR(epsilon&#x3D;1.5, random_state&#x3D;42)</span><br><span class="line">svm_reg2 &#x3D; LinearSVR(epsilon&#x3D;0.5, random_state&#x3D;42)</span><br><span class="line">svm_reg1.fit(X, y)</span><br><span class="line">svm_reg2.fit(X, y)</span><br><span class="line"></span><br><span class="line">def find_support_vectors(svm_reg, X, y):</span><br><span class="line">    y_pred &#x3D; svm_reg.predict(X)</span><br><span class="line">    off_margin &#x3D; (np.abs(y - y_pred) &gt;&#x3D; svm_reg.epsilon)</span><br><span class="line">    return np.argwhere(off_margin)</span><br><span class="line"></span><br><span class="line">svm_reg1.support_ &#x3D; find_support_vectors(svm_reg1, X, y)</span><br><span class="line">svm_reg2.support_ &#x3D; find_support_vectors(svm_reg2, X, y)</span><br><span class="line"></span><br><span class="line">eps_x1 &#x3D; 1</span><br><span class="line">eps_y_pred &#x3D; svm_reg1.predict([[eps_x1]])</span><br><span class="line"></span><br><span class="line">def plot_svm_regression(svm_reg, X, y, axes):</span><br><span class="line">    x1s &#x3D; np.linspace(axes[0], axes[1], 100).reshape(100, 1)</span><br><span class="line">    y_pred &#x3D; svm_reg.predict(x1s)</span><br><span class="line">    plt.plot(x1s, y_pred, &quot;k-&quot;, linewidth&#x3D;2, label&#x3D;r&quot;$\hat&#123;y&#125;$&quot;)</span><br><span class="line">    plt.plot(x1s, y_pred + svm_reg.epsilon, &quot;k--&quot;)</span><br><span class="line">    plt.plot(x1s, y_pred - svm_reg.epsilon, &quot;k--&quot;)</span><br><span class="line">    plt.scatter(X[svm_reg.support_], y[svm_reg.support_], s&#x3D;180, facecolors&#x3D;&#39;#FFAAAA&#39;)</span><br><span class="line">    plt.plot(X, y, &quot;bo&quot;)</span><br><span class="line">    plt.xlabel(r&quot;$x_1$&quot;, fontsize&#x3D;18)</span><br><span class="line">    plt.legend(loc&#x3D;&quot;upper left&quot;, fontsize&#x3D;18)</span><br><span class="line">    plt.axis(axes)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize&#x3D;(9, 4))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">plot_svm_regression(svm_reg1, X, y, [0, 2, 3, 11])</span><br><span class="line">plt.title(r&quot;$\epsilon &#x3D; &#123;&#125;$&quot;.format(svm_reg1.epsilon), fontsize&#x3D;18)</span><br><span class="line">plt.ylabel(r&quot;$y$&quot;, fontsize&#x3D;18, rotation&#x3D;0)</span><br><span class="line">#plt.plot([eps_x1, eps_x1], [eps_y_pred, eps_y_pred - svm_reg1.epsilon], &quot;k-&quot;, linewidth&#x3D;2)</span><br><span class="line">plt.annotate(</span><br><span class="line">        &#39;&#39;, xy&#x3D;(eps_x1, eps_y_pred), xycoords&#x3D;&#39;data&#39;,</span><br><span class="line">        xytext&#x3D;(eps_x1, eps_y_pred - svm_reg1.epsilon),</span><br><span class="line">        textcoords&#x3D;&#39;data&#39;, arrowprops&#x3D;&#123;&#39;arrowstyle&#39;: &#39;&lt;-&gt;&#39;, &#39;linewidth&#39;: 1.5&#125;</span><br><span class="line">    )</span><br><span class="line">plt.text(0.91, 5.6, r&quot;$\epsilon$&quot;, fontsize&#x3D;20)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">plot_svm_regression(svm_reg2, X, y, [0, 2, 3, 11])</span><br><span class="line">plt.title(r&quot;$\epsilon &#x3D; &#123;&#125;$&quot;.format(svm_reg2.epsilon), fontsize&#x3D;18)</span><br><span class="line">save_fig(&quot;svm_regression_plot使用二阶多项式核的SVM回归&quot;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用二阶多项式核的SVM回归</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">np.random.seed(42)</span><br><span class="line">m &#x3D; 100</span><br><span class="line">X &#x3D; 2 * np.random.rand(m, 1) - 1</span><br><span class="line">y &#x3D; (0.2 + 0.1 * X + 0.5 * X**2 + np.random.randn(m, 1)&#x2F;10).ravel()</span><br><span class="line">#SVR类是SVC类的回归等价物，LinearSVR类也是LinearSVC类的回归等价物。LinearSVR与训练集的大小线性相关</span><br><span class="line">#（跟LinearSVC一样），而SVR则在训练集变大时，变得很慢（SVC也是一样）。</span><br><span class="line"></span><br><span class="line">from sklearn.svm import SVR</span><br><span class="line"></span><br><span class="line">svm_poly_reg1 &#x3D; SVR(kernel&#x3D;&quot;poly&quot;, degree&#x3D;2, C&#x3D;100, epsilon&#x3D;0.1, gamma&#x3D;&quot;auto&quot;)</span><br><span class="line">svm_poly_reg2 &#x3D; SVR(kernel&#x3D;&quot;poly&quot;, degree&#x3D;2, C&#x3D;0.01, epsilon&#x3D;0.1, gamma&#x3D;&quot;auto&quot;)</span><br><span class="line">svm_poly_reg1.fit(X, y)</span><br><span class="line">svm_poly_reg2.fit(X, y)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize&#x3D;(9, 4))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">plot_svm_regression(svm_poly_reg1, X, y, [-1, 1, 0, 1])</span><br><span class="line">plt.title(r&quot;$degree&#x3D;&#123;&#125;, C&#x3D;&#123;&#125;, \epsilon &#x3D; &#123;&#125;$&quot;.format(svm_poly_reg1.degree, svm_poly_reg1.C, svm_poly_reg1.epsilon), fontsize&#x3D;18)</span><br><span class="line">plt.ylabel(r&quot;$y$&quot;, fontsize&#x3D;18, rotation&#x3D;0)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">plot_svm_regression(svm_poly_reg2, X, y, [-1, 1, 0, 1])</span><br><span class="line">plt.title(r&quot;$degree&#x3D;&#123;&#125;, C&#x3D;&#123;&#125;, \epsilon &#x3D; &#123;&#125;$&quot;.format(svm_poly_reg2.degree, svm_poly_reg2.C, svm_poly_reg2.epsilon), fontsize&#x3D;18)</span><br><span class="line">save_fig(&quot;svm_with_polynomial_kernel_plot使用二阶多项式核的SVM回归&quot;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>鸢尾花数据集的决策函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">scaler &#x3D; StandardScaler()</span><br><span class="line">svm_clf1 &#x3D; LinearSVC(C&#x3D;1, loss&#x3D;&quot;hinge&quot;, random_state&#x3D;42)</span><br><span class="line">svm_clf2 &#x3D; LinearSVC(C&#x3D;100, loss&#x3D;&quot;hinge&quot;, random_state&#x3D;42)</span><br><span class="line"></span><br><span class="line">scaled_svm_clf1 &#x3D; Pipeline([</span><br><span class="line">        (&quot;scaler&quot;, scaler),</span><br><span class="line">        (&quot;linear_svc&quot;, svm_clf1),</span><br><span class="line">    ])</span><br><span class="line">scaled_svm_clf2 &#x3D; Pipeline([</span><br><span class="line">        (&quot;scaler&quot;, scaler),</span><br><span class="line">        (&quot;linear_svc&quot;, svm_clf2),</span><br><span class="line">    ])</span><br><span class="line"></span><br><span class="line">scaled_svm_clf1.fit(X, y)</span><br><span class="line">scaled_svm_clf2.fit(X, y)</span><br><span class="line"></span><br><span class="line"># Convert to unscaled parameters</span><br><span class="line">b1 &#x3D; svm_clf1.decision_function([-scaler.mean_ &#x2F; scaler.scale_])</span><br><span class="line">b2 &#x3D; svm_clf2.decision_function([-scaler.mean_ &#x2F; scaler.scale_])</span><br><span class="line">w1 &#x3D; svm_clf1.coef_[0] &#x2F; scaler.scale_</span><br><span class="line">w2 &#x3D; svm_clf2.coef_[0] &#x2F; scaler.scale_</span><br><span class="line">svm_clf1.intercept_ &#x3D; np.array([b1])</span><br><span class="line">svm_clf2.intercept_ &#x3D; np.array([b2])</span><br><span class="line">svm_clf1.coef_ &#x3D; np.array([w1])</span><br><span class="line">svm_clf2.coef_ &#x3D; np.array([w2])</span><br><span class="line"></span><br><span class="line"># Find support vectors (LinearSVC does not do this automatically)</span><br><span class="line">t &#x3D; y * 2 - 1</span><br><span class="line">support_vectors_idx1 &#x3D; (t * (X.dot(w1) + b1) &lt; 1).ravel()</span><br><span class="line">support_vectors_idx2 &#x3D; (t * (X.dot(w2) + b2) &lt; 1).ravel()</span><br><span class="line">svm_clf1.support_vectors_ &#x3D; X[support_vectors_idx1]</span><br><span class="line">svm_clf2.support_vectors_ &#x3D; X[support_vectors_idx2]</span><br><span class="line"></span><br><span class="line">from sklearn import datasets</span><br><span class="line"></span><br><span class="line">iris &#x3D; datasets.load_iris()</span><br><span class="line">X &#x3D; iris[&quot;data&quot;][:, (2, 3)]  # petal length, petal width</span><br><span class="line">y &#x3D; (iris[&quot;target&quot;] &#x3D;&#x3D; 2).astype(np.float64)  # Iris-Virginica</span><br><span class="line"></span><br><span class="line">from mpl_toolkits.mplot3d import Axes3D</span><br><span class="line"></span><br><span class="line">def plot_3D_decision_function(ax, w, b, x1_lim&#x3D;[4, 6], x2_lim&#x3D;[0.8, 2.8]):</span><br><span class="line">    x1_in_bounds &#x3D; (X[:, 0] &gt; x1_lim[0]) &amp; (X[:, 0] &lt; x1_lim[1])</span><br><span class="line">    X_crop &#x3D; X[x1_in_bounds]</span><br><span class="line">    y_crop &#x3D; y[x1_in_bounds]</span><br><span class="line">    x1s &#x3D; np.linspace(x1_lim[0], x1_lim[1], 20)</span><br><span class="line">    x2s &#x3D; np.linspace(x2_lim[0], x2_lim[1], 20)</span><br><span class="line">    x1, x2 &#x3D; np.meshgrid(x1s, x2s)</span><br><span class="line">    xs &#x3D; np.c_[x1.ravel(), x2.ravel()]</span><br><span class="line">    df &#x3D; (xs.dot(w) + b).reshape(x1.shape)</span><br><span class="line">    m &#x3D; 1 &#x2F; np.linalg.norm(w)</span><br><span class="line">    boundary_x2s &#x3D; -x1s*(w[0]&#x2F;w[1])-b&#x2F;w[1]</span><br><span class="line">    margin_x2s_1 &#x3D; -x1s*(w[0]&#x2F;w[1])-(b-1)&#x2F;w[1]</span><br><span class="line">    margin_x2s_2 &#x3D; -x1s*(w[0]&#x2F;w[1])-(b+1)&#x2F;w[1]</span><br><span class="line">    ax.plot_surface(x1s, x2, np.zeros_like(x1),</span><br><span class="line">                    color&#x3D;&quot;b&quot;, alpha&#x3D;0.2, cstride&#x3D;100, rstride&#x3D;100)</span><br><span class="line">    ax.plot(x1s, boundary_x2s, 0, &quot;k-&quot;, linewidth&#x3D;2, label&#x3D;r&quot;$h&#x3D;0$&quot;)</span><br><span class="line">    ax.plot(x1s, margin_x2s_1, 0, &quot;k--&quot;, linewidth&#x3D;2, label&#x3D;r&quot;$h&#x3D;\pm 1$&quot;)</span><br><span class="line">    ax.plot(x1s, margin_x2s_2, 0, &quot;k--&quot;, linewidth&#x3D;2)</span><br><span class="line">    ax.plot(X_crop[:, 0][y_crop&#x3D;&#x3D;1], X_crop[:, 1][y_crop&#x3D;&#x3D;1], 0, &quot;g^&quot;)</span><br><span class="line">    ax.plot_wireframe(x1, x2, df, alpha&#x3D;0.3, color&#x3D;&quot;k&quot;)</span><br><span class="line">    ax.plot(X_crop[:, 0][y_crop&#x3D;&#x3D;0], X_crop[:, 1][y_crop&#x3D;&#x3D;0], 0, &quot;bs&quot;)</span><br><span class="line">    ax.axis(x1_lim + x2_lim)</span><br><span class="line">    ax.text(4.5, 2.5, 3.8, &quot;Decision function $h$&quot;, fontsize&#x3D;15)</span><br><span class="line">    ax.set_xlabel(r&quot;Petal length&quot;, fontsize&#x3D;15)</span><br><span class="line">    ax.set_ylabel(r&quot;Petal width&quot;, fontsize&#x3D;15)</span><br><span class="line">    ax.set_zlabel(r&quot;$h &#x3D; \mathbf&#123;w&#125;^T \mathbf&#123;x&#125; + b$&quot;, fontsize&#x3D;18)</span><br><span class="line">    ax.legend(loc&#x3D;&quot;upper left&quot;, fontsize&#x3D;16)</span><br><span class="line"></span><br><span class="line">fig &#x3D; plt.figure(figsize&#x3D;(11, 6))</span><br><span class="line">ax1 &#x3D; fig.add_subplot(111, projection&#x3D;&#39;3d&#39;)</span><br><span class="line">plot_3D_decision_function(ax1, w&#x3D;svm_clf2.coef_[0], b&#x3D;svm_clf2.intercept_[0])</span><br><span class="line"></span><br><span class="line">#save_fig(&quot;iris_3D_plot鸢尾花数据集的决策函数&quot;)</span><br><span class="line">#plt.show()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>权重向量越小，间隔越大</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">def plot_2D_decision_function(w, b, ylabel&#x3D;True, x1_lim&#x3D;[-3, 3]):</span><br><span class="line">    x1 &#x3D; np.linspace(x1_lim[0], x1_lim[1], 200)</span><br><span class="line">    y &#x3D; w * x1 + b</span><br><span class="line">    m &#x3D; 1 &#x2F; w</span><br><span class="line"></span><br><span class="line">    plt.plot(x1, y)</span><br><span class="line">    plt.plot(x1_lim, [1, 1], &quot;k:&quot;)</span><br><span class="line">    plt.plot(x1_lim, [-1, -1], &quot;k:&quot;)</span><br><span class="line">    plt.axhline(y&#x3D;0, color&#x3D;&#39;k&#39;)</span><br><span class="line">    plt.axvline(x&#x3D;0, color&#x3D;&#39;k&#39;)</span><br><span class="line">    plt.plot([m, m], [0, 1], &quot;k--&quot;)</span><br><span class="line">    plt.plot([-m, -m], [0, -1], &quot;k--&quot;)</span><br><span class="line">    plt.plot([-m, m], [0, 0], &quot;k-o&quot;, linewidth&#x3D;3)</span><br><span class="line">    plt.axis(x1_lim + [-2, 2])</span><br><span class="line">    plt.xlabel(r&quot;$x_1$&quot;, fontsize&#x3D;16)</span><br><span class="line">    if ylabel:</span><br><span class="line">        plt.ylabel(r&quot;$w_1 x_1$  &quot;, rotation&#x3D;0, fontsize&#x3D;16)</span><br><span class="line">    plt.title(r&quot;$w_1 &#x3D; &#123;&#125;$&quot;.format(w), fontsize&#x3D;16)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize&#x3D;(12, 3.2))</span><br><span class="line">plt.subplot(121)</span><br><span class="line">plot_2D_decision_function(1, 0)</span><br><span class="line">plt.subplot(122)</span><br><span class="line">plot_2D_decision_function(0.5, 0, ylabel&#x3D;False)</span><br><span class="line">save_fig(&quot;small_w_large_margin_plot&quot;)</span><br><span class="line">plt.show()</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line"></span><br><span class="line">from sklearn.svm import SVC</span><br><span class="line">from sklearn import datasets</span><br><span class="line"></span><br><span class="line">iris &#x3D; datasets.load_iris()</span><br><span class="line">X &#x3D; iris[&quot;data&quot;][:, (2, 3)] # petal length, petal width</span><br><span class="line">y &#x3D; (iris[&quot;target&quot;] &#x3D;&#x3D; 2).astype(np.float64) # Iris-Virginica</span><br><span class="line"></span><br><span class="line">svm_clf &#x3D; SVC(kernel&#x3D;&quot;linear&quot;, C&#x3D;1)</span><br><span class="line">svm_clf.fit(X, y)</span><br><span class="line">svm_clf.predict([[5.3, 1.3]])</span><br><span class="line">#print(svm_clf.predict([[5.3, 1.3]]))</span><br><span class="line"></span><br><span class="line">#Hinge loss</span><br><span class="line">t &#x3D; np.linspace(-2, 4, 200)</span><br><span class="line">h &#x3D; np.where(1 - t &lt; 0, 0, 1 - t)  # max(0, 1-t)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize&#x3D;(5,2.8))</span><br><span class="line">plt.plot(t, h, &quot;b-&quot;, linewidth&#x3D;2, label&#x3D;&quot;$max(0, 1 - t)$&quot;)</span><br><span class="line">plt.grid(True, which&#x3D;&#39;both&#39;)</span><br><span class="line">plt.axhline(y&#x3D;0, color&#x3D;&#39;k&#39;)</span><br><span class="line">plt.axvline(x&#x3D;0, color&#x3D;&#39;k&#39;)</span><br><span class="line">plt.yticks(np.arange(-1, 2.5, 1))</span><br><span class="line">plt.xlabel(&quot;$t$&quot;, fontsize&#x3D;16)</span><br><span class="line">plt.axis([-2, 4, -1, 2.5])</span><br><span class="line">plt.legend(loc&#x3D;&quot;upper right&quot;, fontsize&#x3D;16)</span><br><span class="line">save_fig(&quot;hinge_plot&quot;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2020/03/28/%E7%AC%AC5%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">支持向量机</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">KissingIce</a></p>
+        <p><span>发布时间:</span>2020-03-28, 15:51:40</p>
+        <p><span>最后更新:</span>2020-03-28, 17:39:33</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2020/03/28/%E7%AC%AC5%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" title="支持向量机">http://yoursite.com/2020/03/28/%E7%AC%AC5%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2020/03/28/%E7%AC%AC5%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/　　作者: KissingIce" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2020/03/26/%E7%AC%AC4%E7%AB%A0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">
+                    第4章训练模型
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#线性SVM分类"><span class="toc-number">1.</span> <span class="toc-text">线性SVM分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#非线性SVM分类"><span class="toc-number">2.</span> <span class="toc-text">非线性SVM分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVM回归"><span class="toc-number">3.</span> <span class="toc-text">SVM回归</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"支持向量机　| KissingIce　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2020/03/26/%E7%AC%AC4%E7%AB%A0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/" title="下一篇: 第4章训练模型">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/28/%E7%AC%AC5%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">支持向量机</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/26/%E7%AC%AC4%E7%AB%A0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">第4章训练模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/24/python%E7%88%AC%E5%8F%96%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87/">python爬取网页图片</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/18/%E7%AC%AC3%E7%AB%A0%E5%88%86%E7%B1%BB/">第3章分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/">第2章端到端的机器学习项目</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/">c语言笔试准备</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/05/c%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/">c语言面试准备</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/03/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2020 KissingIce
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 6;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

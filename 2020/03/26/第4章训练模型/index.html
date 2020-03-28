@@ -15,14 +15,14 @@
 
 
 
-<meta name="description" content="参考：作者的Jupyter NotebookChapter 2 – End-to-end Machine Learning project  生成图片并保存 123456789101112131415161718192021from __future__ import division, print_function, unicode_literalsimport numpy as npimpor">
+<meta name="description" content="参考：作者的Jupyter NotebookChapter 4 – Training Linear Models  生成图片并保存 123456789101112131415161718192021from __future__ import division, print_function, unicode_literalsimport numpy as npimport matplotlib">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第4章训练模型">
 <meta property="og:url" content="http://yoursite.com/2020/03/26/%E7%AC%AC4%E7%AB%A0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="KissingIce">
-<meta property="og:description" content="参考：作者的Jupyter NotebookChapter 2 – End-to-end Machine Learning project  生成图片并保存 123456789101112131415161718192021from __future__ import division, print_function, unicode_literalsimport numpy as npimpor">
+<meta property="og:description" content="参考：作者的Jupyter NotebookChapter 4 – Training Linear Models  生成图片并保存 123456789101112131415161718192021from __future__ import division, print_function, unicode_literalsimport numpy as npimport matplotlib">
 <meta property="article:published_time" content="2020-03-26T11:55:09.000Z">
-<meta property="article:modified_time" content="2020-03-27T08:51:31.600Z">
+<meta property="article:modified_time" content="2020-03-28T07:54:58.644Z">
 <meta property="article:author" content="KissingIce">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
@@ -293,7 +293,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>参考：作者的<a href="https://nbviewer.jupyter.org/github/ageron/handson-ml/tree/master/" target="_blank" rel="noopener">Jupyter Notebook</a><br><a href="https://nbviewer.jupyter.org/github/ageron/handson-ml/blob/master/04_training_linear_models.ipynb" target="_blank" rel="noopener">Chapter 2 – End-to-end Machine Learning project</a></p>
+        <p>参考：作者的<a href="https://nbviewer.jupyter.org/github/ageron/handson-ml/tree/master/" target="_blank" rel="noopener">Jupyter Notebook</a><br><a href="https://nbviewer.jupyter.org/github/ageron/handson-ml/blob/master/04_training_linear_models.ipynb" target="_blank" rel="noopener">Chapter 4 – Training Linear Models</a></p>
 <ol>
 <li>生成图片并保存 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">from __future__ import division, print_function, unicode_literals</span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib as mpl</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import os</span><br><span class="line">np.random.seed(42)</span><br><span class="line"></span><br><span class="line">mpl.rc(&#39;axes&#39;, labelsize&#x3D;14)</span><br><span class="line">mpl.rc(&#39;xtick&#39;, labelsize&#x3D;12)</span><br><span class="line">mpl.rc(&#39;ytick&#39;, labelsize&#x3D;12)</span><br><span class="line"></span><br><span class="line"># Where to save the figures</span><br><span class="line">PROJECT_ROOT_DIR &#x3D; &quot;images&quot;</span><br><span class="line">CHAPTER_ID &#x3D; &quot;traininglinearmodels&quot;</span><br><span class="line"></span><br><span class="line">def save_fig(fig_id, tight_layout&#x3D;True):</span><br><span class="line">    path &#x3D; os.path.join(PROJECT_ROOT_DIR, CHAPTER_ID, fig_id + &quot;.png&quot;)</span><br><span class="line">    print(&quot;Saving figure&quot;, fig_id)</span><br><span class="line">    if tight_layout:</span><br><span class="line">        plt.tight_layout()</span><br><span class="line">    plt.savefig(path, format&#x3D;&#39;png&#39;, dpi&#x3D;600)</span><br></pre></td></tr></table></figure>
 
@@ -419,7 +419,7 @@
         <p><span>本文标题:</span><a href="/2020/03/26/%E7%AC%AC4%E7%AB%A0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">第4章训练模型</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">KissingIce</a></p>
         <p><span>发布时间:</span>2020-03-26, 19:55:09</p>
-        <p><span>最后更新:</span>2020-03-27, 16:51:31</p>
+        <p><span>最后更新:</span>2020-03-28, 15:54:58</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2020/03/26/%E7%AC%AC4%E7%AB%A0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/" title="第4章训练模型">http://yoursite.com/2020/03/26/%E7%AC%AC4%E7%AB%A0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2020/03/26/%E7%AC%AC4%E7%AB%A0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/　　作者: KissingIce" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -433,6 +433,12 @@
 
 
     <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2020/03/28/%E7%AC%AC5%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">
+                    支持向量机
+                </a>
+            </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
@@ -505,7 +511,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2020/03/28/%E7%AC%AC5%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" title="上一篇: 支持向量机">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
@@ -517,7 +525,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/26/%E7%AC%AC4%E7%AB%A0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">第4章训练模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/24/python%E7%88%AC%E5%8F%96%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87/">python爬取网页图片</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/18/%E7%AC%AC3%E7%AB%A0%E5%88%86%E7%B1%BB/">第3章分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/">第2章端到端的机器学习项目</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/">c语言笔试准备</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/05/c%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/">c语言面试准备</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/03/hello-world/">Hello World</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/28/%E7%AC%AC5%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">支持向量机</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/26/%E7%AC%AC4%E7%AB%A0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">第4章训练模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/24/python%E7%88%AC%E5%8F%96%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87/">python爬取网页图片</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/18/%E7%AC%AC3%E7%AB%A0%E5%88%86%E7%B1%BB/">第3章分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/11/%E7%AC%AC2%E7%AB%A0%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/">第2章端到端的机器学习项目</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/06/c%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AF%95%E5%87%86%E5%A4%87/">c语言笔试准备</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/05/c%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/">c语言面试准备</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/03/hello-world/">Hello World</a></li></ul>
 
 
 
